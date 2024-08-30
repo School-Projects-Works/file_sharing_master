@@ -9,6 +9,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.initData();
   runApp(const ProviderScope(child: MyApp()));
+  
 }
 
 class MyApp extends ConsumerWidget {
