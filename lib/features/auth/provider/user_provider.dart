@@ -88,7 +88,7 @@ class NewUser extends StateNotifier<UserModel> {
   }
 
   void setEmail(String s) {
-    state = state.copyWith(email: s);
+    state = state.copyWith(email: s.trim().replaceAll(' ', ''));
   }
 
   void setPhone(String s) {
@@ -128,7 +128,7 @@ class LoginProvider extends StateNotifier<LoginModel> {
   LoginProvider() : super(LoginModel(email: '', password: ''));
 
   void setEmail(String s) {
-    state = state.copyWith(email: s);
+    state = state.copyWith(email: s.trim().replaceAll(' ', ''));
   }
 
   void setPassword(String s) {

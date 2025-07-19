@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "472355731911",
-    "project_id": "file-sharing-master",
-    "storage_bucket": "file-sharing-master.appspot.com"
+    "project_number": "86721664528",
+    "project_id": "file-net-97e98",
+    "storage_bucket": "file-net-97e98.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:472355731911:android:dbaf6dab63b28a042d01e2",
+        "mobilesdk_app_id": "1:86721664528:android:2092ea42266a1ed2a89c95",
         "android_client_info": {
           "package_name": "com.example.file_sharing"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAbOxODKEDOPkrLs8FEDbcCKA9Nc80OR7s"
+          "current_key": "AIzaSyAPlxHGGYpv0LTHeoPwDm8dPAuPSOUbYWo"
         }
       ],
       "services": {

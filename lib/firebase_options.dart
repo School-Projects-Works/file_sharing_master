@@ -23,20 +23,11 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -50,19 +41,46 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAVlWWN3o1tSRptj0ADfu5r5EO1C_1zpIM',
-    appId: '1:472355731911:web:82d7bde0a5e87a172d01e2',
-    messagingSenderId: '472355731911',
-    projectId: 'file-sharing-master',
-    authDomain: 'file-sharing-master.firebaseapp.com',
-    storageBucket: 'file-sharing-master.appspot.com',
+    apiKey: 'AIzaSyDEAiHr4lDbi4RNzDTh5eWWCMZtxHDZteA',
+    appId: '1:86721664528:web:192560e7fc8802f5a89c95',
+    messagingSenderId: '86721664528',
+    projectId: 'file-net-97e98',
+    authDomain: 'file-net-97e98.firebaseapp.com',
+    storageBucket: 'file-net-97e98.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAbOxODKEDOPkrLs8FEDbcCKA9Nc80OR7s',
-    appId: '1:472355731911:android:dbaf6dab63b28a042d01e2',
-    messagingSenderId: '472355731911',
-    projectId: 'file-sharing-master',
-    storageBucket: 'file-sharing-master.appspot.com',
+    apiKey: 'AIzaSyAPlxHGGYpv0LTHeoPwDm8dPAuPSOUbYWo',
+    appId: '1:86721664528:android:2092ea42266a1ed2a89c95',
+    messagingSenderId: '86721664528',
+    projectId: 'file-net-97e98',
+    storageBucket: 'file-net-97e98.firebasestorage.app',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDRjq0nuYRS23ySLDQ4VfmtIYOZocnFTk8',
+    appId: '1:86721664528:ios:e9eb93c5a75d4a32a89c95',
+    messagingSenderId: '86721664528',
+    projectId: 'file-net-97e98',
+    storageBucket: 'file-net-97e98.firebasestorage.app',
+    iosBundleId: 'com.example.fileSharing',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDRjq0nuYRS23ySLDQ4VfmtIYOZocnFTk8',
+    appId: '1:86721664528:ios:e9eb93c5a75d4a32a89c95',
+    messagingSenderId: '86721664528',
+    projectId: 'file-net-97e98',
+    storageBucket: 'file-net-97e98.firebasestorage.app',
+    iosBundleId: 'com.example.fileSharing',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyDEAiHr4lDbi4RNzDTh5eWWCMZtxHDZteA',
+    appId: '1:86721664528:web:99bf3b10b5911d26a89c95',
+    messagingSenderId: '86721664528',
+    projectId: 'file-net-97e98',
+    authDomain: 'file-net-97e98.firebaseapp.com',
+    storageBucket: 'file-net-97e98.firebasestorage.app',
   );
 }
