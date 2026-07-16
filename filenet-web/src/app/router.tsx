@@ -8,6 +8,7 @@ import { RegisterPage } from "@/features/auth/RegisterPage";
 import { ForgotPasswordPage } from "@/features/auth/ForgotPasswordPage";
 import { DashboardPage } from "@/routes/DashboardPage";
 import { FilesPage } from "@/routes/FilesPage";
+import { FileDetailPage } from "@/routes/FileDetailPage";
 import { SharedPage } from "@/routes/SharedPage";
 import { NotificationsPage } from "@/routes/NotificationsPage";
 import { GroupsPage } from "@/routes/GroupsPage";
@@ -35,6 +36,7 @@ export const router = createBrowserRouter([
               { index: true, element: <Navigate to="/dashboard" replace /> },
               { path: "dashboard", element: <DashboardPage /> },
               { path: "files", element: <FilesPage /> },
+              { path: "files/:id", element: <FileDetailPage /> },
               { path: "shared", element: <SharedPage /> },
               { path: "notifications", element: <NotificationsPage /> },
               { path: "account", element: <AccountPage /> },

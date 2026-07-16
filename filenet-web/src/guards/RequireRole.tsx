@@ -8,11 +8,16 @@ import { useProfileOutletContext } from "@/guards/AuthOutletContext";
  * (unlike the old Flutter app, where hidden menu items were the only gate).
  */
 export function RequireRole({ role }: { role: string }) {
-  const { profile } = useProfileOutletContext();
+  const context = useProfileOutletContext();
 
-  if (profile.role !== role) {
+  if (context.profile.role !== role) {
     return <Navigate to="/unauthorized" replace />;
   }
 
-  return <Outlet />;
+  // useOutletContext only sees the NEAREST ancestor Outlet's context — without
+  // passing it through explicitly here, nested routes under this guard (e.g.
+  // GroupsPage) get undefined instead of inheriting AppShell's context.
+  // Confirmed via a real crash: "Cannot destructure property 'userId' of
+  // useProfileOutletContext(...) as it is undefined" on GroupsPage.
+  return <Outlet context={context} />;
 }

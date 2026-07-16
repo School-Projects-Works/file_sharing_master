@@ -32,12 +32,17 @@ create table groups (
   created_at timestamptz not null default now()
 );
 
+-- PowerSync requires every synced table to have a single "id" column (its CRUD
+-- queue tracks rows by id) — a composite (group_id, member_id) primary key alone
+-- doesn't work: replicated rows come through with no id at all. Matches the
+-- id + separate unique-constraint pattern already used on file_shares.
 create table group_members (
+  id uuid primary key default gen_random_uuid(),
   group_id uuid not null references groups(id) on delete cascade,
   member_id uuid not null references profiles(id) on delete cascade,
   added_by uuid not null references profiles(id),
   added_at timestamptz not null default now(),
-  primary key (group_id, member_id)
+  unique (group_id, member_id)
 );
 
 -- files: the shareable "document" identity. The actual blob(s) live in

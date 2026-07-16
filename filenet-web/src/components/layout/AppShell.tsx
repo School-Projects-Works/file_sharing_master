@@ -1,11 +1,13 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { FileText, LayoutDashboard, Users, UsersRound, Bell, UserCircle, LogOut, Share2 } from "lucide-react";
+import { useQuery } from "@powersync/react";
+import { FileText, LayoutDashboard, Users, UsersRound, Bell, UserCircle, LogOut, Share2, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { connector } from "@/powersync/SupabaseConnector";
 import { useProfileOutletContext } from "@/guards/AuthOutletContext";
 
-const navItem = (to: string, label: string, Icon: React.ComponentType<{ className?: string }>) => (
+const navItem = (to: string, label: string, Icon: React.ComponentType<{ className?: string }>, badge?: number) => (
   <NavLink
     key={to}
     to={to}
@@ -17,13 +19,23 @@ const navItem = (to: string, label: string, Icon: React.ComponentType<{ classNam
     }
   >
     <Icon className="size-4" />
-    {label}
+    <span className="flex-1">{label}</span>
+    {Boolean(badge) && (
+      <Badge variant="destructive" className="h-5 min-w-5 justify-center px-1">
+        {badge}
+      </Badge>
+    )}
   </NavLink>
 );
 
 export function AppShell() {
   const { profile } = useProfileOutletContext();
   const isAdmin = profile.role === "admin";
+  const { data: unread } = useQuery<{ n: number }>(
+    "SELECT COUNT(*) as n FROM notifications WHERE recipient_id = ? AND is_read = 0",
+    [profile.id]
+  );
+  const unreadCount = unread[0]?.n ?? 0;
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -33,12 +45,13 @@ export function AppShell() {
           {navItem("/dashboard", "Dashboard", LayoutDashboard)}
           {navItem("/files", "My Files", FileText)}
           {navItem("/shared", "Shared With Me", Share2)}
-          {navItem("/notifications", "Notifications", Bell)}
+          {navItem("/notifications", "Notifications", Bell, unreadCount)}
           {isAdmin && (
             <>
               <div className="mt-4 mb-1 px-3 text-xs font-semibold tracking-wide text-sidebar-foreground/50 uppercase">
                 Admin
               </div>
+              {navItem("/admin/dashboard", "Overview", ShieldCheck)}
               {navItem("/groups", "Groups", UsersRound)}
               {navItem("/admin/users", "Users", Users)}
             </>
