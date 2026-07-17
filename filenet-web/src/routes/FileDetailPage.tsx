@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@powersync/react";
 import { toast } from "sonner";
-import { Download, FileText, RotateCw, Trash2 } from "lucide-react";
+import { FileText, RotateCw, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -18,20 +18,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useProfileOutletContext } from "@/guards/AuthOutletContext";
 import { ShareDialog } from "@/features/files/ShareDialog";
-import { deleteFile, getDownloadUrl, uploadNewVersion, validateUpload } from "@/features/files/api";
+import { deleteFile, uploadNewVersion, validateUpload } from "@/features/files/api";
+import { VersionRow, type VersionRowData } from "@/features/files/VersionRow";
 import type { FileRecord } from "@/powersync/AppSchema";
-
-type VersionRow = {
-  id: string;
-  file_id: string;
-  storage_path: string;
-  file_size: number | null;
-  mime_type: string;
-  uploaded_by: string;
-  created_at: string;
-  uploader_name: string | null;
-  version_number: number;
-};
 
 export function FileDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -43,7 +32,7 @@ export function FileDetailPage() {
   const { data: files } = useQuery<FileRecord>("SELECT * FROM files WHERE id = ?", [id ?? ""]);
   const file = files[0];
 
-  const { data: versions } = useQuery<VersionRow>(
+  const { data: versions } = useQuery<VersionRowData>(
     `SELECT fv.*, p.full_name as uploader_name,
             ROW_NUMBER() OVER (PARTITION BY fv.file_id ORDER BY fv.created_at) as version_number
      FROM file_versions fv
@@ -59,15 +48,6 @@ export function FileDetailPage() {
 
   const isOwner = file.owner_id === userId;
   const canManage = isOwner || profile.role === "admin";
-
-  const handleDownload = async (storagePath: string) => {
-    try {
-      const url = await getDownloadUrl(storagePath);
-      window.open(url, "_blank");
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Could not generate download link");
-    }
-  };
 
   const handleReuploadChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
@@ -148,21 +128,7 @@ export function FileDetailPage() {
         </CardHeader>
         <CardContent className="grid gap-2">
           {versions.map((v) => (
-            <div key={v.id} className="flex items-center justify-between rounded-md border p-3">
-              <div>
-                <p className="font-medium">
-                  Version {v.version_number}
-                  {v.version_number === versions.length && <span className="ml-2 text-xs text-muted-foreground">(latest)</span>}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {v.uploader_name ?? "Unknown"} &middot; {new Date(v.created_at).toLocaleString()}
-                  {v.file_size ? ` · ${(v.file_size / 1024).toFixed(0)} KB` : ""}
-                </p>
-              </div>
-              <Button variant="ghost" size="icon" onClick={() => handleDownload(v.storage_path)}>
-                <Download className="size-4" />
-              </Button>
-            </div>
+            <VersionRow key={v.id} version={v} isLatest={v.version_number === versions.length} />
           ))}
         </CardContent>
       </Card>

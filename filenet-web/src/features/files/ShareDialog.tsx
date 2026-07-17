@@ -98,10 +98,17 @@ export function ShareDialog({ fileId, currentUserId }: { fileId: string; current
               <p className="p-4 text-sm text-muted-foreground">You're not part of any groups.</p>
             ) : (
               <Command className="rounded-md border">
+                <CommandInput placeholder="Search groups..." />
                 <CommandList>
+                  <CommandEmpty>No groups found.</CommandEmpty>
                   <CommandGroup>
                     {groups.map((g) => (
-                      <CommandItem key={g.id} onSelect={() => handleShareToGroup(g.id)} disabled={sharing === g.id}>
+                      <CommandItem
+                        key={g.id}
+                        value={g.name ?? ""}
+                        onSelect={() => handleShareToGroup(g.id)}
+                        disabled={sharing === g.id}
+                      >
                         {g.name}
                       </CommandItem>
                     ))}
